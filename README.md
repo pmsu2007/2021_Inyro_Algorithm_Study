@@ -1,9 +1,42 @@
 # 2021_Inyro_Algorithm_Study
 
-[이코테]
+---------------------------------------------
 
-youtube   https://www.youtube.com/c/dongbinna
+## Textbook
 
-blog   https://blog.naver.com/ndb796
+나동빈(2020). 이것이 *취업을 위한* 코딩 테스트다:with python. 한빛미디어.
 
-github   https://github.com/ndb796
+| youtube | https://www.youtube.com/c/dongbinna |
+| ------- | ----------------------------------- | 
+| blog    | https://blog.naver.com/ndb796       |
+| github  | https://github.com/ndb796           |
+  
+## team
+*Team Dynamic !*
+
+박수빈(팀장) 휴먼과 / 20
+</br>
+
+박민수 컴과 / 18
+</br>
+
+김유정 휴먼과 / 20
+</br>
+
+강승아 컴과 / 19
+
+
+## Study plan
+
+| 날짜        | 주차  | 내용                                                    | 비고  |
+| -----       | ----- | ----                                                    | ----- |
+| 2021년 9월 17일  | 1주차 |          |       |
+| 2021년 9월 24일  | 2주차 |               |       | 
+| 2021년 10월 1일  | 3주차 |               |       |
+| 2021년 10월 8일 | 4주차 |                |       |
+| 2021년 11월 5일  | 5주차 |                |       |
+| 2021년 11월 12일 | 6주차 |              |       |
+| 2021년 11월 19일 | 7주차 |              |       |
+| 2021년 11월 26일 | 8주차 |              |       |
+| 2021년 12월 3일  | 9주차 |               |       |
+
