@@ -2,7 +2,7 @@
 
 > 일단 순차 탐색을 복습해보면
 >
-> 정의: 리스트 안에 있는 특정한 데이터를 찾기 위해 앞에서부터 데니터를 하나씩 차례대로 확인하는 방법이다
+> 정의: 리스트 안에 있는 특정한 데이터를 찾기 위해 앞에서부터 데이터를 하나씩 차례대로 확인하는 방법이다
 >
 > 시간 복잡도: O(n)
 
@@ -24,6 +24,7 @@ def sequential_search(n,target,array):
 **시간 복잡도: O(logN)**
 
 ~~~python
+# 제귀함수로 만들기
 def binary_search(array, target, start, end):
   if start>end: #탐색할 데이터가 없으면
     return None
@@ -31,9 +32,21 @@ def binary_search(array, target, start, end):
   if array[mid] == target: #찾을 데이터가 중간점에 있으면
     return mid
   elif target > array[mid]: #찾을 데이터가 중간점보다 크면
-    return binart_search(array, target, mid, end) 
+    return binart_search(array, target, mid+1, end) 
   else: #찾을 데이터가 중간점보다 작으면
     return binart_search(array, target, start, mid-1)
+  
+ # 반복문으로 만들기
+def Binary_Searching(array, target, start, end):
+  while start <= end:
+    mid = (start + end) // 2
+    if array[mid] == target: #찾을 데이터가 중간점에 있으면
+    	return mid
+  	elif target > array[mid]: #찾을 데이터가 중간점보다 크면
+    	start = mid + 1
+  	else: #찾을 데이터가 중간점보다 작으면
+    	end = mid - 1
+  return None
 ~~~
 
 이진 탐색은 많은 곳에서 응용되고, 고난이도 문제에서는 다른 알고리즘과 함께 사용하기도 한다. 쉽다고 생각할 수 있지만, 정작 참고 소스가 없으면 상당히 어렵다(고 책에 적혀 있다.) 그래서 이 코드를 외우는 것이 좋다고 했다.
@@ -54,10 +67,10 @@ def binary_search(array, target, start, end):
 
 트리 자료구조에서 몇 가지 특징이 있다. 
 
-1. 보모 노드와 자식 노드가 있다.
-2. 트리의 최상단 노드를 루트 노드라 한다.
-3. 트리의 최하단 노드를 단말 노드라 한다.
-4. 트리의 일부도 트리이며, 이를 서브 트리라고 한다.
+1. 부모 노드와 자식 노드가 있다.
+2. 트리의 최상단 노드를 **루트 노드**라 한다.
+3. 트리의 최하단 노드를 **단말 노드**라 한다.
+4. 트리의 일부도 트리이며, 이를 **서브 트리**라고 한다.
 5. 트리는 파일 시스템과 같은 **계층적이고 정렬된 데이터에를 다루기에 적합하다**
 
 트리 자료구조에서 이진 탐색과 비슷한 탐색 방법을 사용하려면 **이진 탐색 트리**가 필수다. 책에서는 그림을 통해 탐색과정을 매우 간단하게 설명했고, 스터디에서 굳이 하지 않아도 된다고 생각해 이 부분을 제외하겠습니다.  책의 P193~P195에 있습니다. 
@@ -73,4 +86,20 @@ import sys
 input_data = sys.stdin.readline().rsplit()
 #rsplit()는 엔터를 제거할 수 있음.
 ~~~
+
+## 추가: 실전 문제 3번
+
+이 문제는 전형적인 이진 탐색 문제이며, **파라메트릭 서치(Parametric Search)** 문제이다. 
+
+### 즉, 최적화 문제를 결정 문제*로 바꾸는 기법을 사용하는 것이다. 
+
+*결정 문제: 예, 아니요로 답할 수 있는 문제
+
+이 문제의 풀이는 생각보다 간단하다. 바로 **적절한 위치를 찾을 때까지 높이 H를 조절하는 것이다.**
+
+하지만, 높이를 조절하는 게 그냥 1cm씩 조절하는 것이 아닌, **이진 탐색을 사용해** 위치를 조절하는 것이 핵심이다. ~~( 특히 이 문제의 입력이 10억이고 시간 제한이 1초라 순차 텀색 당연히 안되겠지? )~~
+
+풀이를 간단하게 얘기하면
+
+> 길이가 가장 긴 떡과 짧은 떡으로 탐색 범위를 설정하고, 이진 탐색을 이용해 조건에 가장 근접한 답을 얻을 때까지 한 번 씩 해보기 
 
