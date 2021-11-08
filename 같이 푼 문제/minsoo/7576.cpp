@@ -11,47 +11,17 @@ using namespace std;
 
 vector<vector<int>>map(1000, vector<int>(1000));
 int width, height;
-vector<pair<int, int>> direction = { {-1,0}, {1,0} ,{0,-1},{0,1} };
+vector<pair<int, int>> direction = { {-1,0}, {1,0} ,{0,-1}, {0,1} };
 
-
-void effect(int x, int y)
-{
-	map[x][y] = 2; // 방문 처리
-	
-	for (int i = 0; i < 4; i++)
-	{
-		int nx = x + direction[i].first;
-		int ny = y + direction[i].second;
-
-		if (nx < 0 || ny < 0 || nx >= height || ny >= width)
-			continue;
-		else if (map[nx][ny] == 0)
-			map[nx][ny] = 1;
-	}
-}
-
-bool check(int x, int y)
-{
-	for (int i = 0; i < 4; i++) // 상하좌우 확인
-	{
-		int nx = x + direction[i].first;
-		int ny = y + direction[i].second;
-
-		if (nx < 0 || ny < 0 || nx >= height || ny >= width)
-			continue;
-		else if (map[nx][ny] != -1) 
-			return false;
-	}
-	return true;
-}
-
+queue<pair<int, int>> curTomato;
+queue<pair<int, int>> nextTomato;
 
 int main()
 
 {
 	cin >> width >> height;
 
-	bool firstCheck = false;
+	int countZero = 0;
 
 	for (int i = 0; i < height; i++)
 	{
@@ -59,59 +29,57 @@ int main()
 		{
 			cin >> map[i][j];
 			if (map[i][j] == 0)
-				firstCheck = true;
+				countZero++;
+			else if (map[i][j] == 1)
+			{
+				curTomato.push(make_pair(i, j));
+			}
 		}
 	}
 
-	// 0이 없으면 저장 시 이미 익어있다고 가정
-	if (!firstCheck)
+	int ans = 0; 
+	while (true)
 	{
-		cout << 0;
-		return 0;
-	}
+		// 종료 조건
+		if (curTomato.empty() && nextTomato.empty())
+			break;
 
-	queue<pair<int, int>> tomato;
-	int ans = 0;
-	while (true) // 하루 당 반복
-	{
-		// 검사
-		bool noZero = false; // 다 익었을 때 check
-		bool noSolution = false; // 익지 못하는 상황 check
-		for (int i = 0; i < height; i++)
+		while (!curTomato.empty())
 		{
-			for (int j = 0; j < width; j++)
+			pair<int, int> currentCoord = curTomato.front();
+			curTomato.pop();
+			map[currentCoord.first][currentCoord.second] = 2; // 방문처리
+
+			for (int i = 0; i < 4; i++)
 			{
-				if (map[i][j] == 1)
-					tomato.push({ i,j });
-				else if (map[i][j] == 0)
+				int nrow = currentCoord.first + direction[i].first;
+				int ncol = currentCoord.second + direction[i].second;
+
+				if (nrow < 0 || ncol < 0 || nrow >= height || ncol >= width)
+					continue;
+				else if (map[nrow][ncol] == 0)
 				{
-					noZero = true;
-					noSolution = check(i, j);
+					countZero--;
+					map[nrow][ncol] = 1;
+					nextTomato.push(make_pair(nrow, ncol));
 				}
 			}
 		}
 
-		if (!noZero)
-		{
-			cout << ans;
-			break;
-		}
-
-		if (noSolution)
-		{		
-			cout << -1;
-			break;
-		}
-
-		while (!tomato.empty())
-		{
-			pair<int, int> coord = tomato.front();
-			tomato.pop();
-
-			effect(coord.first, coord.second);
-		}
+		// 하루 체크
 		ans++;
+		while (!nextTomato.empty())
+		{
+			pair<int, int> temp = nextTomato.front();
+			nextTomato.pop();
+			curTomato.push(temp);
+		}
 	}
+
+	if (countZero > 0)
+		cout << -1 << '\n';
+	else
+		cout << ans - 1 << '\n';
 }
 
 /*
@@ -124,4 +92,7 @@ int main()
 			}
 			cout << '\n';
 		}
+
+		입력받을 때 1은 큐에 넣고 0의 개수 세기
+
 */
